@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <title>Motivation Tools</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="./js/jspdf/jspdf.min.js"></script>
+		<script type="text/javascript" src="./js/jspdf/jspdf.js"></script>
+		<script type="text/javascript" src="./js/jspdf/debug.js"></script>
+		<script type="text/javascript" src="./js/jspdf/images.js"></script>
+		<script type="text/javascript" src="./js/jspdf/addimage.js"></script>
+		<script type="text/javascript" src="./js/jspdf/FileSaver.js"></script>
+		<script type="text/javascript" src="./js/jspdf/canvas.js"></script>
+		<script type="text/javascript" src="./js/jspdf/html2canvas.js"></script>
+		<script type="text/javascript" src="./js/jspdf/deflate.js"></script>
+		<script type="text/javascript" src="./js/jspdf/standard_fonts_metrics.js"></script> 
+		<script type="text/javascript" src="./js/jspdf/split_text_to_size.js"></script>               
+		<script type="text/javascript" src="./js/jspdf/blob.js"></script>
+		<script type="text/javascript" src="./js/jspdf/addhtml.js"></script>
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	
+	<link href="./css/style.css" rel="stylesheet">
+	<link href="./css/font-awesome.css" rel="stylesheet">
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- Include Simple Slider JavaScript and CSS -->
+<script src="./js/simple-slider.js"></script>
+<link href="./css/simple-slider.css" rel="stylesheet" type="text/css" />
+
+    <!-- Activate Simple Slider on your input -->
+ 
+<script>
+      $(document).ready(function() {
+  $( ".situationimg" ).click(function() {
+    $( this ).toggleClass( "situationimg_click" );
+    
+});
+          
+    }); 
+      
+      	$(document).ready(function(){
+			$('#reload_btn').click(function() {
+			if(confirm("Are you sure? All changes will be deleted"))
+				{
+					$("#loading").show();
+					location.reload(true);	
+					$("#loading").hide();
+				}
+				else
+				{
+					if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+				}
+			});
+		});
+
+  
+  
+  </script>
+ 
+<!--[if lte IE 9]>    
+ <script>
+
+$(document).ready(function(){
+		$( ".pdf_save" ).find("p:last").text("Print session");
+		$( ".pdf_save" ).css("width", "200px");
+			
+		$( "#pdfhtml, .pdf_save" ).click(function() {
+			$("#img_logo").attr("class","img_logo_temp");
+				$("#top_wrapper").attr("class","top_wrapper_temp");
+				$(".showpdf").show();
+				$(".ignorepdf").hide();
+			
+				
+				window.print();
+				window.onfocus=function(){ exportRevert();}
+		});
+		
+		function exportRevert() {
+			$(".ignorepdf").removeAttr('style');
+				$("#img_logo").removeAttr('class');
+				$("#top_wrapper").removeAttr('class');
+				$(".showpdf").hide();
+		}
+		
+		
+		
+		});
+</script>		
+<![endif]-->		
+
+<!--[if !(IE)]><!--> 
+
+ <script>
+
+$(document).ready(function(){
+
+		$( "#pdfhtml, .pdf_save" ).click(function() {
+				$("#img_logo").attr("class","img_logo_temp");
+				$("#top_wrapper").attr("class","top_wrapper_temp");
+				$(".showpdf").show();
+				$(".ignorepdf").hide();
+				exportPDF();	
+		});
+		function exportRevert() {
+				$(".ignorepdf").removeAttr('style');
+				$("#img_logo").removeAttr('class');
+				$("#top_wrapper").removeAttr('class');
+				$(".showpdf").hide();
+		}
+		
+		function exportPDF() {		
+				$("#loading").show();	
+			    var doc = new jsPDF('p','px','letter');
+			    var options = {
+        			 pagesplit: true
+   				 };
+				doc.addHTML($('#container')[0], 5, 5, {
+					'background': '#fff',
+					'width': 1200, 
+   			 }, function() {
+    	
+				$("#loading").hide();
+				
+				if ( navigator.userAgent.indexOf('iPad') == -1 )
+  					{
+					doc.save("LivingWellSession");
+ 					 }
+				else {
+				doc.output('datauri');
+				
+				}
+				$("#iframepdf").attr("src", doc.output('datauristring')); 
+			
+				$('#pdfdownloadlink').click(function () { doc.save('liwingWellsession.pdf');});  
+				
+		exportRevert();
+		
+			}); 
+		}
+		
+		});
+</script>		
+		
+<!--<![endif]-->
+
+
+
+
+
+
+</head>
+
+<body>
+
+	<div class="modal_white"></div>
+	<div id="loading">
+		<div class="imgload">
+			<h1>Creating the PDF</h1>
+			<img src="./img/loader.gif" style="width: 80px; height: 80px;">
+	</div>
+	</div>
+	<div id="container">
+		<div id="top_wrapper">
+				<img id="img_logo" src="./img/logo.jpg">
+				<h1 class="showpdf" style="width:50%;">Take Action on Your Hearing</h1>				
+				<div id="nav_controls" Class="ignorepdf" >
+					
+					<div class="nav_page">
+						<a href="#" id="reload_btn">
+						<div class="nav_save_btn nav_btn">
+						<p><i class="icon-refresh icon-large" ></i></p>
+						</div>
+						<p>Reset session</p>
+						</a>
+					</div>
+					<div class="nav_page">
+						<a href="#" class="pdf_save" >
+						<div class="nav_btn">
+						<p><i class="icon-file-text icon-large" ></i></p>
+						</div>
+						<p>Download</p>
+						</a>
+					</div>
+					
+				</div>
+		</div>
+		
+		
+		
+		
+		
+		<div id="page_wrapper">
+			<div class="page">
+				
+				<div class="content_page">
+					<div class="content" style="margin-top: 75px !important;">
+						
+						
+						<h1 class="ignorepdf">Take Action on Your Hearing</h1>
+						<p>TThis activity is designed to help you think about how important it would be for you to improve your hearing in communication situations that you may find it difficult to hear in today. You can print out a copy and bring it to your first appointment, or email it to your audiologist before you meet.</p>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<div class="page">
+				<div class="content_page">
+					<div class="content">
+						<h2>Many people discover that they have a hearing loss because they have hearing difficulties in one or often more of the situations shown below.</h2>
+						Take a look at the photos. Have you experienced hearing difficulties in any of these situations?  (Click to select)
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="session" id="session1">
+				   <div id="images">
+    <ul id="situations">
+            <li id="strategy1" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/1_Communicating-in-noisy-environment.jpg"></li>
+            <li id="strategy2" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/2_Communicating-with-family.jpg"></li>
+            <li id="strategy3" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/3_Communicating-with-spouse.jpg"></li>
+            <li id="strategy4" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/11_woman_on_the_phone.jpg"></li>
+            <li id="strategy5" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/7_Communicating-in-meeting,professional-events.jpg"></li>
+            <li id="strategy6" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/8_Watching-a-movie-in-cinema.jpg"></li>
+            <li id="strategy7" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/9_Communicating-in-car.jpg"></li>
+            <li id="strategy8" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/10_Shopping.jpg"></li>
+            <li id="strategy8" class="situationimg"><img style="width: 300px; height: 200px;" src="./img/situations/12_man_with_child.jpg"></li>
+            
+    </ul>
+  </div>
+			</div> 
+			
+			
+			<hr class="session_line" style="display:none;">
+		
+			<div class="page">
+				<div class="content_page"  style="clear:both; margin-bottom:40px !important;">
+					<div class="content">
+						<div class="left_content">
+							<p> How important is it for you to improve your hearing in the selected situations? (Place the marker on the line)</p>
+  							<div id="slidescale">
+    							<input type="text" data-slider="true" value="5.4" data-slider-range="1,10" data-slider-step="0.1">
+    							
+							</div>
+							<div style="width:44%; float:left; padding-left:20px;">1</div>
+							<div style="width:48%; float:left; text-align: right; padding-right:15px;">10</div>
+    							
+						</div>
+						<div class="right_content">
+					What is your reason for putting the marker where you did?
+					<textarea placeholder="Please write your reasons here" id="text1" type="text" class="textquestions1"></textarea>
+					</div>
+						
+				</div>
+			</div>
+			
+			<div class="session" id="session2">
+				<div class="openquestion">
+					What will happen if you continue as you do today?
+					<textarea placeholder="Write here" id="text2" type="text" class="textquestions" style="margin-top:22px;"></textarea>
+					</div>
+					<div class="openquestion">
+					What would happen if you get a hearing aid and improve your hearing right now?
+					<textarea placeholder="Write here" id="text3" type="text"  class="textquestions" style="margin-top:2px;"></textarea>
+					</div>
+					
+					
+			</div> 
+                
+                
+                <div class="session" id="session2">
+				<div class="openquestion">
+					What will happen if you continue as you do today?
+					<textarea placeholder="Write here" id="text2" type="text" class="textquestions" style="margin-top:22px;"></textarea>
+					
+                    <a href="#" class="pdf_save" >
+                    
+                    </div>
+				
+					
+					
+			</div> 
+                
+			<div class="session ignorepdf" id="session3">
+				
+					 <h2 style="padding-left:14px;">Hear their stories</h2>
+    <div style="padding-left:14px; width:49%; float:left; margin-right: 6px;">
+      <iframe src="https://player.vimeo.com/video/128467673" width="95%" height="270" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+    </div>
+    <div style=" width:49%; float:left;"><iframe src="https://player.vimeo.com/video/138837087" width="95%" height="270" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+    </div>
+					
+			</div>
+				
+			<div id="container">
+		<div id="top_wrapper">
+                </div>
+                    </div>
+		
+	
+      
+	</div>
+            
+        </div>
+
+            
+            
+            	<div class="nav_page">
+						<a href="#" class="pdf_save" >
+						<div class="nav_btn">
+						<p><i class="icon-file-text icon-large" ></i></p>
+						</div>
+						<p>Download</p>
+						</a>
+					</div>
+            
+            
+<script>
+  $("[data-slider]")
+    .each(function () {
+      var input = $(this);
+      $("<span>")
+        .addClass("output")
+        	.insertAfter($(this));
+     
+    })
+    .bind("slider:ready slider:changed", function (event, data) {
+      $(this)
+        .nextAll(".output")
+          .html(data.value.toFixed(0));
+       $(this).parents().find(".dragger").append("<p></p>").html(data.value.toFixed(0));  
+    });
+  </script>
+</body></html>
